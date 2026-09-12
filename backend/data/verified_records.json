@@ -1,0 +1,1087 @@
+{
+  "dataset_name": "Ustad Assist Equipment Fault Knowledge Base",
+  "dataset_version": "2.0",
+  "status": "verified_for_rag",
+  "scope": [
+    "solar_inverter",
+    "ups"
+  ],
+  "verification_policy": {
+    "source_requirement": "Official manufacturer manual only.",
+    "page_requirement": "Each record must have an exact printed manual page reference.",
+    "unsupported_information": "Use 'Not stated in manual' rather than inventing or inferring manufacturer facts.",
+    "model_matching": "Records are keyed by manufacturer, model, equipment category, alarm/error type, and code/condition.",
+    "classification_note": "Safe-user vs technician-only classification is not claimed unless the manual explicitly states it."
+  },
+  "manual_metadata": [
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Shenzhen Growatt New Energy CO.,LTD",
+      "model": "MIN 3000 TL-X",
+      "model_aliases": [
+        "MIN 3000TL-X"
+      ],
+      "model_family": [
+        "MIN 2500 TL-X",
+        "MIN 3000 TL-X",
+        "MIN 3600 TL-X",
+        "MIN 4200 TL-X",
+        "MIN 4600 TL-X",
+        "MIN 5000 TL-X",
+        "MIN 6000 TL-X"
+      ],
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "source_type": "official_manufacturer_manual",
+      "verified_printed_page_range_for_troubleshooting": "37-40",
+      "manual_scope_note": "The manual explicitly covers MIN 3000 TL-X.",
+      "manual_source_note": "The official PDF is hosted on en.growatt.com; the manual itself prints www.ginverter.com."
+    },
+    {
+      "equipment_category": "ups",
+      "manufacturer": "Eaton",
+      "model": "5PX1500IRT2UG2",
+      "manual_title": "Eaton 5PX Advanced User Guide",
+      "manual_document_number": "614-40094-00",
+      "publication_year": 2021,
+      "official_url": "https://www.eaton.com/content/dam/eaton/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/eaton-5px-ups/AUG_Eaton-5PX-EMEA_2021-06%20.pdf",
+      "source_type": "official_manufacturer_manual",
+      "verified_printed_page_range_for_troubleshooting": "35-36",
+      "manual_scope_note": "The official manual explicitly lists 5PX1500IRT2UG2 among the covered models.",
+      "manual_source_note": "The document title is exactly 'Eaton 5PX Advanced User Guide'; document number 614-40094-00."
+    }
+  ],
+  "global_safety": {
+    "growatt": [
+      "The manual is for qualified personnel.",
+      "Electrical installation, repairs and conversions may only be carried out by electrically qualified persons.",
+      "There is residual voltage in the inverter; the manual states the inverter takes 20 minutes to discharge.",
+      "AC and DC voltage sources are terminated inside the PV inverter; disconnect these circuits before servicing.",
+      "High voltage may remain after disconnection; follow the manual's safety instructions before servicing.",
+      "The manual warns not to ground the DC circuits of PV modules connected to the MIN TL-X."
+    ],
+    "eaton": [
+      "Battery servicing should be performed by qualified service personnel knowledgeable of batteries and required precautions.",
+      "Batteries can present a risk of electrical shock or burn from high short-circuit current.",
+      "Do not open or mutilate batteries; released electrolyte is harmful and may be toxic.",
+      "Do not disconnect batteries while the UPS is in Battery mode.",
+      "Power outlets may remain energized while the UPS is disconnected from AC power."
+    ]
+  },
+  "records": [
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "201",
+      "type": "error",
+      "issue_title": "Residual I High",
+      "meaning": "Leakage current too high",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart the inverter.",
+        "If the error message still exists, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 37,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "203",
+      "type": "error",
+      "issue_title": "PV Isolation Low",
+      "meaning": "Insulation problem",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Check if panel enclosure ground properly.",
+        "Check if inverter ground properly.",
+        "Check if the DC breaker gets wet.",
+        "Check the impedance of PV (+) & PV (-) between ground (must be more than 25 KΩ or 500 KΩ (VDE 0126)).",
+        "If the error message is displayed despite the above checking passed, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 38,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "300",
+      "type": "error",
+      "issue_title": "AC V Outrange",
+      "meaning": "Utility grid voltage is out of permissible range.",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Please switch off DC switch.",
+        "Check AC wiring, especially neutral and ground wire.",
+        "Check grid voltage is complied with local grid standard.",
+        "Restart inverter; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 38,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "302",
+      "type": "error",
+      "issue_title": "No AC connection",
+      "meaning": "No AC connection",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Check AC wiring.",
+        "Check the status of AC breaker"
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 38,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "303",
+      "type": "error",
+      "issue_title": "PE abnormal",
+      "meaning": "Voltage of Neutral and PE above 30V.",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Check the voltage of Neutral and PE.",
+        "Check AC wiring.",
+        "Restart inverter; if error message still exists, contact Manufacturer."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 38,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "304",
+      "type": "error",
+      "issue_title": "AC F Outrange",
+      "meaning": "Utility grid frequency out of permissible range.",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Please switch off DC switch.",
+        "Check AC wiring, especially neutral and ground wire.",
+        "Check grid frequency is complied with local grid standard.",
+        "Restart inverter; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 38,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "407",
+      "type": "error",
+      "issue_title": "Auto Test Failed",
+      "meaning": "Auto test didn't pass.",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter, repeat Auto Test; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 38,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "202",
+      "type": "error",
+      "issue_title": "PV Voltage High",
+      "meaning": "The DC input voltage is exceeding the maximum tolerable value.",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Disconnect the DC switch immediately.",
+        "Check the voltage of each PV string with multimeter.",
+        "If the voltage of PV string is lower than 550 V, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "Incorrect sizing of the PV plant may result in voltages that could destroy the inverter. Turn the rotary switch of the DC Disconnect to Off immediately and contact the installer. The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 38,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "202",
+      "type": "warning",
+      "issue_title": "DC SPD function abnormal",
+      "meaning": "DC SPD function abnormal",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "After shutdown, check the DC SPD.",
+        "If the error message still exists, contact manufacturer."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 39,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "203",
+      "type": "warning",
+      "issue_title": "PV1 or PV2 Circuit short",
+      "meaning": "PV1 or PV2 Circuit short",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Check the PV panel polarity.",
+        "Restart the inverter.",
+        "If the warning still exists, contact Growatt customer service to replace the POWER board."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 39,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "204",
+      "type": "warning",
+      "issue_title": "Dryconnect function abnormal",
+      "meaning": "Dryconnect function abnormal",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "After shutdown, check the Dryconnect wiring.",
+        "If the error message still exists, contact manufacturer."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 39,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "205",
+      "type": "warning",
+      "issue_title": "PV1 or PV2 boost broken",
+      "meaning": "PV1 or PV2 boost broken",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart the inverter.",
+        "If the warning still exists, contact Growatt customer service to replace the power board."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 39,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "207",
+      "type": "warning",
+      "issue_title": "USB over-current",
+      "meaning": "USB over-current",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Unplug the U disk or monitor.",
+        "Re-access U disk or monitor after shutdown.",
+        "If the error message still exists, contact manufacturer."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 39,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "401",
+      "type": "warning",
+      "issue_title": "Inverter communicates with Meter abnormal",
+      "meaning": "Inverter communicates with Meter abnormal",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Check if the meter is on.",
+        "Check the inverter and the meter connection is normal."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 39,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "404",
+      "type": "warning",
+      "issue_title": "EEPROM abnormal",
+      "meaning": "EEPROM abnormal",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart the inverter.",
+        "If the warning still exists, contact Growatt customer service to replace the M3 board."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 39,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "405",
+      "type": "warning",
+      "issue_title": "Firmware version is not consistent",
+      "meaning": "Firmware version is not consistent",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Uptate the right version firmware"
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 39,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "200",
+      "type": "error",
+      "issue_title": "AFCI fault",
+      "meaning": "AFCI fault",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "After shutdown, check the PV panel terminal.",
+        "Restart inverter.",
+        "If error message still exists, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "Danger of fire from electric arc. Only test the AFCI for false tripping in the order described by the manual. Do not deactivate the AFCI permanently. If Error 200 is displayed, an electric arc occurred in the PV system; the AFCI has tripped and the inverter is in permanent shutdown. Do not work on the product during operation. The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "402",
+      "type": "error",
+      "issue_title": "Output High DCI",
+      "meaning": "Output High DCI",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "404",
+      "type": "error",
+      "issue_title": "Bus sample fault",
+      "meaning": "Bus sample fault",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "405",
+      "type": "error",
+      "issue_title": "Relay fault",
+      "meaning": "Relay fault",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "408",
+      "type": "error",
+      "issue_title": "Over Temperature",
+      "meaning": "Over Temperature",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "If the ambient temperature of inverter is lower than 60°C, restart inverter; if error message still exists, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "409",
+      "type": "error",
+      "issue_title": "Bus over voltage",
+      "meaning": "Bus over voltage",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "411",
+      "type": "error",
+      "issue_title": "DSP communicates with M3 abnormal",
+      "meaning": "DSP communicates with M3 abnormal",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "414",
+      "type": "error",
+      "issue_title": "EEPROM fault",
+      "meaning": "EEPROM fault",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "417",
+      "type": "error",
+      "issue_title": "The data sampled by the DSP and redundant M3 is not the same",
+      "meaning": "The data sampled by the DSP and redundant M3 is not the same",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter; if problem still exist, contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "420",
+      "type": "error",
+      "issue_title": "GFCI fault",
+      "meaning": "GFCI fault",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter; if problem still exist, or contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "solar_inverter",
+      "manufacturer": "Growatt",
+      "model": "MIN 3000 TL-X",
+      "manual_title": "Installation & Operation Manual",
+      "manual_document_number": "GR-UM-155-A-04",
+      "source_type": "official_manufacturer_manual",
+      "official_source_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf",
+      "error_code_or_warning": "425",
+      "type": "error",
+      "issue_title": "AFCI self-test fault",
+      "meaning": "AFCI self-test fault",
+      "possible_causes": "Not stated in manual",
+      "troubleshooting_steps": [
+        "Restart inverter; if problem still exist, or contact Growatt."
+      ],
+      "safe_user_checks": "Not stated in manual",
+      "technician_only_checks": "Not stated in manual",
+      "safety_warning": "The manual is for qualified personnel. Electrical installation, repairs and conversions may only be carried out by electrically qualified persons. Dangerous high voltages are present; residual voltage remains and the inverter takes 20 minutes to discharge. After disconnection, components may retain charge sufficient to create a shock hazard.",
+      "source": {
+        "manual_title": "Installation & Operation Manual",
+        "manual_document_number": "GR-UM-155-A-04",
+        "page": 40,
+        "official_url": "https://en.growatt.com/upload/file/20221206/b17e6c83f1a6fe0045412cf8532236b2.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Record normalized directly from the provided Growatt manual. Unsupported cause/user-check/technician-only claims are explicitly not stated rather than inferred."
+    },
+    {
+      "equipment_category": "ups",
+      "manufacturer": "Eaton",
+      "model": "5PX1500IRT2UG2",
+      "error_code_or_alarm": "Battery mode",
+      "issue_title": "UPS running on battery power",
+      "meaning": "A utility (mains) power failure has occurred and the UPS is supplying the load from battery power.",
+      "possible_causes": [
+        "A utility failure has occurred and the UPS is in battery mode."
+      ],
+      "troubleshooting_steps": [
+        "No corrective action required for the fault itself; this is a normal protective response to utility failure.",
+        "Prepare connected equipment for an orderly shutdown in case backup time runs out.",
+        "Wait for utility power to return; the UPS will automatically transfer back to Normal mode."
+      ],
+      "safe_user_checks": "Not explicitly classified in manual",
+      "technician_only_checks": "Not explicitly classified in manual",
+      "safety_warning": "The UPS has its own internal power source (the battery); power outlets may remain energized even when the UPS is disconnected from the AC power source.",
+      "source": {
+        "manual_title": "Eaton 5PX Advanced User Guide",
+        "manual_document_number": "614-40094-00",
+        "page": "35",
+        "official_url": "https://www.eaton.com/content/dam/eaton/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/eaton-5px-ups/AUG_Eaton-5PX-EMEA_2021-06%20.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Verified against Eaton's official Eaton 5PX Advanced User Guide, document 614-40094-00. The manual covers model 5PX1500IRT2UG2. Printed troubleshooting references are pages 35-36."
+    },
+    {
+      "equipment_category": "ups",
+      "manufacturer": "Eaton",
+      "model": "5PX1500IRT2UG2",
+      "error_code_or_alarm": "Battery mode (battery running low)",
+      "issue_title": "Battery running low while on battery power",
+      "meaning": "The UPS is in Battery mode and the battery is running low (LED on, one beep every 3 seconds).",
+      "possible_causes": [
+        "The UPS is in Battery mode and the battery is running low."
+      ],
+      "troubleshooting_steps": [
+        "Treat this as an approximate warning; actual remaining runtime may vary significantly depending on load and number of Extended Battery Modules (EBMs).",
+        "The 'Battery Low' warning may occur before batteries reach 20% remaining capacity.",
+        "Shut down connected equipment before backup power is exhausted."
+      ],
+      "safe_user_checks": "Not explicitly classified in manual",
+      "technician_only_checks": "Not explicitly classified in manual",
+      "safety_warning": "",
+      "source": {
+        "manual_title": "Eaton 5PX Advanced User Guide",
+        "manual_document_number": "614-40094-00",
+        "page": "35",
+        "official_url": "https://www.eaton.com/content/dam/eaton/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/eaton-5px-ups/AUG_Eaton-5PX-EMEA_2021-06%20.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Verified against Eaton's official Eaton 5PX Advanced User Guide, document 614-40094-00. The manual covers model 5PX1500IRT2UG2. Printed troubleshooting references are pages 35-36."
+    },
+    {
+      "equipment_category": "ups",
+      "manufacturer": "Eaton",
+      "model": "5PX1500IRT2UG2",
+      "error_code_or_alarm": "No battery",
+      "issue_title": "Batteries disconnected",
+      "meaning": "The batteries are disconnected from the UPS (LED on, continuous beep).",
+      "possible_causes": [
+        "The batteries are disconnected."
+      ],
+      "troubleshooting_steps": [
+        "Verify that all batteries are properly connected.",
+        "If the condition persists, contact your Eaton service representative."
+      ],
+      "safe_user_checks": "Not explicitly classified in manual",
+      "technician_only_checks": "Not explicitly classified in manual",
+      "safety_warning": "Batteries present a risk of electric shock or burn from high short-circuit current and may contain high voltage and corrosive, toxic, explosive substances. Only qualified personnel should handle battery connections.",
+      "source": {
+        "manual_title": "Eaton 5PX Advanced User Guide",
+        "manual_document_number": "614-40094-00",
+        "page": "35 (alarm table); safety warning per p.2 Special Symbols and p.32 Replacing Batteries",
+        "official_url": "https://www.eaton.com/content/dam/eaton/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/eaton-5px-ups/AUG_Eaton-5PX-EMEA_2021-06%20.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Verified against Eaton's official Eaton 5PX Advanced User Guide, document 614-40094-00. The manual covers model 5PX1500IRT2UG2. Printed troubleshooting references are pages 35-36."
+    },
+    {
+      "equipment_category": "ups",
+      "manufacturer": "Eaton",
+      "model": "5PX1500IRT2UG2",
+      "error_code_or_alarm": "Battery fault",
+      "issue_title": "Battery test failed",
+      "meaning": "The battery self-test failed due to bad or disconnected batteries (LED on, continuous beep).",
+      "possible_causes": [
+        "The battery test failed due to bad or disconnected batteries."
+      ],
+      "troubleshooting_steps": [
+        "Verify that all batteries are properly connected.",
+        "If the condition persists, contact your Eaton service representative."
+      ],
+      "safe_user_checks": "Not explicitly classified in manual",
+      "technician_only_checks": "Not explicitly classified in manual",
+      "safety_warning": "Batteries present a risk of electric shock or burn from high short-circuit current and may contain high voltage and corrosive, toxic, explosive substances. Never dispose of batteries in fire; do not open or mutilate.",
+      "source": {
+        "manual_title": "Eaton 5PX Advanced User Guide",
+        "manual_document_number": "614-40094-00",
+        "page": "35 (alarm table); safety warning per p.2 and p.32-33",
+        "official_url": "https://www.eaton.com/content/dam/eaton/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/eaton-5px-ups/AUG_Eaton-5PX-EMEA_2021-06%20.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Verified against Eaton's official Eaton 5PX Advanced User Guide, document 614-40094-00. The manual covers model 5PX1500IRT2UG2. Printed troubleshooting references are pages 35-36."
+    },
+    {
+      "equipment_category": "ups",
+      "manufacturer": "Eaton",
+      "model": "5PX1500IRT2UG2",
+      "error_code_or_alarm": "Reduced backup time (no LCD code — described condition)",
+      "issue_title": "UPS does not provide the expected backup time",
+      "meaning": "The batteries need charging or servicing.",
+      "possible_causes": [
+        "The batteries need charging or service."
+      ],
+      "troubleshooting_steps": [
+        "Apply utility power for 48 hours to charge the batteries.",
+        "If the condition persists, contact your Eaton service representative."
+      ],
+      "safe_user_checks": "Not explicitly classified in manual",
+      "technician_only_checks": "Not explicitly classified in manual",
+      "safety_warning": "",
+      "source": {
+        "manual_title": "Eaton 5PX Advanced User Guide",
+        "manual_document_number": "614-40094-00",
+        "page": "35",
+        "official_url": "https://www.eaton.com/content/dam/eaton/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/eaton-5px-ups/AUG_Eaton-5PX-EMEA_2021-06%20.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Verified against Eaton's official Eaton 5PX Advanced User Guide, document 614-40094-00. The manual covers model 5PX1500IRT2UG2. Printed troubleshooting references are pages 35-36."
+    },
+    {
+      "equipment_category": "ups",
+      "manufacturer": "Eaton",
+      "model": "5PX1500IRT2UG2",
+      "error_code_or_alarm": "Power Overload",
+      "issue_title": "Connected load exceeds UPS capacity",
+      "meaning": "Power requirements exceed the UPS capacity (greater than 100% of nominal output rating).",
+      "possible_causes": [
+        "Too much equipment connected to the UPS outlets"
+      ],
+      "troubleshooting_steps": [
+        "Remove some of the equipment from the UPS.",
+        "Note: the UPS continues to operate but may shut down if the load increases further.",
+        "The alarm resets automatically when the overload condition clears."
+      ],
+      "safe_user_checks": "Not explicitly classified in manual",
+      "technician_only_checks": "Not explicitly classified in manual",
+      "safety_warning": "",
+      "source": {
+        "manual_title": "Eaton 5PX Advanced User Guide",
+        "manual_document_number": "614-40094-00",
+        "page": "35",
+        "official_url": "https://www.eaton.com/content/dam/eaton/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/eaton-5px-ups/AUG_Eaton-5PX-EMEA_2021-06%20.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Verified against Eaton's official Eaton 5PX Advanced User Guide, document 614-40094-00. The manual covers model 5PX1500IRT2UG2. Printed troubleshooting references are pages 35-36."
+    },
+    {
+      "equipment_category": "ups",
+      "manufacturer": "Eaton",
+      "model": "5PX1500IRT2UG2",
+      "error_code_or_alarm": "UPS overtemperature",
+      "issue_title": "Internal temperature too high",
+      "meaning": "The UPS internal temperature is too high or a fan has failed (LED on, one beep every 3 seconds). If temperature rises a further 10°C, the UPS shuts down.",
+      "possible_causes": [
+        "The UPS internal temperature is too high.",
+        "A fan has failed."
+      ],
+      "troubleshooting_steps": [
+        "Clear vents and remove any heat sources near the unit.",
+        "Allow the UPS to cool.",
+        "Ensure airflow around the UPS is not restricted.",
+        "Restart the UPS.",
+        "If the condition persists, contact your Eaton service representative."
+      ],
+      "safe_user_checks": "Not explicitly classified in manual",
+      "technician_only_checks": "Not explicitly classified in manual",
+      "safety_warning": "",
+      "source": {
+        "manual_title": "Eaton 5PX Advanced User Guide",
+        "manual_document_number": "614-40094-00",
+        "page": "35",
+        "official_url": "https://www.eaton.com/content/dam/eaton/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/eaton-5px-ups/AUG_Eaton-5PX-EMEA_2021-06%20.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Verified against Eaton's official Eaton 5PX Advanced User Guide, document 614-40094-00. The manual covers model 5PX1500IRT2UG2. Printed troubleshooting references are pages 35-36."
+    },
+    {
+      "equipment_category": "ups",
+      "manufacturer": "Eaton",
+      "model": "5PX1500IRT2UG2",
+      "error_code_or_alarm": "UPS does not start",
+      "issue_title": "UPS fails to power on",
+      "meaning": "The UPS will not start when the power button is pressed.",
+      "possible_causes": [
+        "Input power source is not connected correctly",
+        "The Remote Power Off (RPO) switch is active or the RPO connector is missing"
+      ],
+      "troubleshooting_steps": [
+        "Check the input and battery connections.",
+        "If the UPS Status menu displays the 'Remote Power Off' notice, deactivate the RPO input."
+      ],
+      "safe_user_checks": "Not explicitly classified in manual",
+      "technician_only_checks": "Not explicitly classified in manual",
+      "safety_warning": "Dangerous voltage levels are present within the UPS; power outlets may remain energized even when disconnected from AC power.",
+      "source": {
+        "manual_title": "Eaton 5PX Advanced User Guide",
+        "manual_document_number": "614-40094-00",
+        "page": "35-36",
+        "official_url": "https://www.eaton.com/content/dam/eaton/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/eaton-5px-ups/AUG_Eaton-5PX-EMEA_2021-06%20.pdf"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Verified against Eaton's official Eaton 5PX Advanced User Guide, document 614-40094-00. The manual covers model 5PX1500IRT2UG2. Printed troubleshooting references are pages 35-36."
+    }
+  ],
+  "verification_summary": {
+    "growatt_records": 27,
+    "eaton_ups_records": 8,
+    "total_verified_records": 35,
+    "unverified_records": 0,
+    "excluded_records": 0,
+    "growatt_printed_troubleshooting_pages": "37-40",
+    "eaton_printed_troubleshooting_pages": "35-36"
+  },
+  "coding_readiness": {
+    "status": "ready",
+    "rule": "All records in this file are marked verification_status=verified and have an official manufacturer source plus an exact printed page reference.",
+    "record_count": 35
+  }
+}
