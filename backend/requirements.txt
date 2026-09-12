@@ -13,8 +13,8 @@ sentence-transformers==3.1.1
 faiss-cpu==1.8.0.post1
 numpy==1.26.4
 
-# ---- Phase 3+: Gemini grounding + Vision (do not install/use until that phase) ----
-# google-generativeai==0.8.2
+# ---- Phase 3: Gemini grounding (required now) ----
+google-generativeai==0.8.2
 
 # ---- Phase 4+: image upload handling (multipart form data) ----
 # python-multipart==0.0.9

@@ -6,24 +6,41 @@ health check. No troubleshooting, vision, or Gemini routes are registered
 yet — those are added in later phases.
 """
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import catalog
+from app.routes import catalog, troubleshoot
 from app.schemas import HealthResponse
 from config.settings import get_settings
 from engine.kb_loader import get_knowledge_base
 
 settings = get_settings()
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Load and normalize the knowledge base once, at process start — not
+    per-request. Failing fast here (rather than on the first API call) is
+    intentional: a missing or malformed dataset should surface immediately
+    when the backend starts, not silently on a user's first request.
+    """
+    get_knowledge_base()
+    yield
+
+
 app = FastAPI(
     title=settings.app_name,
     version="0.1.0",
     description=(
         "Ustad Assist backend API — safety-first troubleshooting copilot "
-        "for Solar Inverters and UPS systems. Phase 1: backend foundation "
-        "and verified knowledge base loading only."
+        "for Solar Inverters and UPS systems. Phase 4: full P0 "
+        "troubleshoot workflow (retrieval -> Gemini grounding -> "
+        "citation/safety validation), served over HTTP."
     ),
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -35,17 +52,7 @@ app.add_middleware(
 )
 
 app.include_router(catalog.router)
-
-
-@app.on_event("startup")
-def on_startup() -> None:
-    """
-    Load and normalize the knowledge base once, at process start — not
-    per-request. Failing fast here (rather than on the first API call) is
-    intentional: a missing or malformed dataset should surface immediately
-    when the backend starts, not silently on a user's first request.
-    """
-    get_knowledge_base()
+app.include_router(troubleshoot.router)
 
 
 @app.get("/health", response_model=HealthResponse, tags=["system"])

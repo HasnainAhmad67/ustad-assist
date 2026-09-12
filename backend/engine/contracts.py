@@ -150,3 +150,56 @@ class EvidenceBundle:
     query: Query
     matched_records: List[NormalizedRecord] = field(default_factory=list)
     retrieval_method: Optional[str] = None  # "exact" | "semantic"
+
+
+class SafetyCategory(str, Enum):
+    """
+    Fixed hazard/procedure categories used by engine/safety/safety_rules.py
+    for deterministic classification. Stored as plain strings in
+    SafetyInfo.reason_category so SafetyInfo's shape never had to change
+    when this enum was introduced.
+    """
+
+    NONE = "none"
+    FIRE_OR_SMOKE = "fire_or_smoke"
+    ELECTRICAL_HAZARD = "electrical_hazard"
+    BATTERY_HAZARD = "battery_hazard"
+    REPEATED_FAULT = "repeated_fault"
+    TECHNICIAN_ONLY_PROCEDURE = "technician_only_procedure"
+
+
+@dataclass(frozen=True)
+class GroundedAnswer:
+    """
+    The structured explanation Gemini is allowed to produce, per
+    engine/grounding/response_contract.py.
+
+    Deliberately excludes citation fields (manual title, document number,
+    page, official URL) and any safety/verification classification —
+    those are never Gemini's to originate. Citation always comes from
+    EvidenceBundle; safety classification always comes from
+    engine/safety/.
+    """
+
+    issue_summary: str
+    meaning_explanation: str
+    cause_explanations: List[str]
+    safe_check_guidance: List[str]
+    technician_only_guidance: List[str]
+    next_action: str
+
+
+@dataclass(frozen=True)
+class TroubleshootResult:
+    """
+    The final, fully validated result of the P0/P1-shared engine pipeline
+    (allow-list -> retrieval -> grounding -> validation). This is what a
+    later API route (Phase 4) will serialize into the public response
+    schema.
+    """
+
+    status: TroubleshootStatus
+    message: str
+    evidence: Optional[EvidenceBundle]
+    grounded_answer: Optional[GroundedAnswer]
+    safety: Optional[SafetyInfo]
