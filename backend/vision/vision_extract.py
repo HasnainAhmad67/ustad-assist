@@ -24,7 +24,7 @@ from vision.response_contract import (
 
 
 # Gemini model used for vision/image understanding.
-DEFAULT_VISION_MODEL_NAME = "gemini-3.8-flash"
+DEFAULT_VISION_MODEL_NAME = "gemini-3.6-flash"
 
 
 # (api_key, model_name, image_bytes, mime_type) -> raw_text
@@ -127,7 +127,6 @@ def _default_vision_call_fn(
     image_bytes: bytes,
     mime_type: str,
 ) -> str:
-    print("🔥 VISION RUNTIME MODEL =", model_name)
     """
     Real Gemini Vision API call using the current google-genai SDK.
 
@@ -150,6 +149,17 @@ def _default_vision_call_fn(
             _PROMPT,
             image_part,
         ],
+        config=types.GenerateContentConfig(
+            # This is a label/display read, not a reasoning task — low
+            # thinking keeps the call fast and, more importantly, keeps
+            # the model from padding its answer with commentary that
+            # would break the strict JSON parse below.
+            thinking_config=types.ThinkingConfig(thinking_level="low"),
+            # Enforce JSON at the API level instead of relying on the
+            # model to voluntarily follow the "respond with ONLY JSON"
+            # instruction in the prompt text.
+            response_mime_type="application/json",
+        ),
     )
 
     if not response.text:
