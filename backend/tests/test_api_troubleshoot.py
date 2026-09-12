@@ -188,3 +188,50 @@ def test_alias_model_form_is_accepted():
 
     assert response.status_code == 200
     assert response.json()["status"] == "verified_result"
+
+
+def test_confirmed_image_source_joins_the_same_endpoint():
+    """
+    A confirmed P1 detection uses the exact same /api/troubleshoot
+    endpoint as P0 typed input — only `source` differs — and produces an
+    identical result for identical evidence.
+    """
+    app.dependency_overrides[get_gemini_client_dep] = lambda: _fake_client(_valid_raw_response())
+    client = TestClient(app)
+
+    response = client.post(
+        "/api/troubleshoot",
+        json={
+            "equipment_category": "solar_inverter",
+            "manufacturer": "Growatt",
+            "model": "MIN 3000 TL-X",
+            "code": "201",
+            "source": "image",
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "verified_result"
+    assert body["evidence"]["retrieval_method"] == "exact"
+
+
+def test_confirmed_image_source_missing_manufacturer_returns_422():
+    """
+    vision/confirmation.py's stricter check runs for source="image" —
+    an empty required field is rejected before it ever reaches retrieval,
+    even though TroubleshootRequest's own min_length=1 would already catch
+    a fully-empty string; this confirms the confirmation-layer check fires too.
+    """
+    client = TestClient(app)
+    response = client.post(
+        "/api/troubleshoot",
+        json={
+            "equipment_category": "solar_inverter",
+            "manufacturer": " ",  # whitespace-only, passes min_length=1 but fails confirmation's .strip() check
+            "model": "MIN 3000 TL-X",
+            "code": "201",
+            "source": "image",
+        },
+    )
+    assert response.status_code == 422

@@ -67,14 +67,14 @@ class HealthResponse(BaseModel):
 class TroubleshootRequest(BaseModel):
     """
     Request for POST /api/troubleshoot. Identical shape whether the caller
-    is the P0 typed-input form or (once vision exists) a confirmed P1
-    image detection — `source` records which one, but every field below is
-    otherwise the same.
+    is the P0 typed-input form or a confirmed P1 image detection —
+    `source` records which one, but every field below is otherwise the
+    same, and both are validated identically here.
     """
 
-    equipment_category: str
-    manufacturer: str
-    model: str
+    equipment_category: str = Field(..., min_length=1)
+    manufacturer: str = Field(..., min_length=1)
+    model: str = Field(..., min_length=1)
     code: Optional[str] = None
     symptom: Optional[str] = None
     source: str = "manual"  # "manual" | "image"
@@ -149,3 +149,30 @@ class TroubleshootResponse(BaseModel):
     evidence: Optional[EvidenceOut] = None
     grounded_answer: Optional[GroundedAnswerOut] = None
     safety: Optional[SafetyOut] = None
+
+
+class VisionCandidateOut(BaseModel):
+    """One detection candidate for the user to confirm or edit — never
+    troubleshooting content."""
+
+    equipment_category: Optional[str] = None
+    manufacturer: Optional[str] = None
+    model: Optional[str] = None
+    code: Optional[str] = None
+    confidence: float
+    raw_model_text: Optional[str] = None
+
+
+class VisionExtractResponse(BaseModel):
+    """
+    Response for POST /api/vision/extract. Always a set of candidates for
+    the user to confirm/edit, or an unclear/no-match/error status — never
+    a troubleshooting result.
+
+    status values: "image_unclear" | "candidates_found" | "no_candidates" | "error"
+    """
+
+    status: str
+    reason: Optional[str] = None
+    candidates: List[VisionCandidateOut] = Field(default_factory=list)
+    message: str

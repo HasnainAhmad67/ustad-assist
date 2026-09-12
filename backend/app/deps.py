@@ -10,6 +10,7 @@ dependency_overrides mechanism.
 from config.settings import Settings, get_settings
 from engine.grounding.gemini_client import GeminiClient
 from engine.kb_loader import KnowledgeBase, get_knowledge_base
+from vision.vision_extract import VisionExtractor
 
 
 def get_settings_dep() -> Settings:
@@ -27,3 +28,12 @@ def get_gemini_client_dep() -> GeminiClient:
     rather than needing network access or a real API key.
     """
     return GeminiClient()
+
+
+def get_vision_extractor_dep() -> VisionExtractor:
+    """
+    Returns a real VisionExtractor, configured from settings.gemini_api_key.
+    Tests override this dependency the same way they override
+    get_gemini_client_dep.
+    """
+    return VisionExtractor()

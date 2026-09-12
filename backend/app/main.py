@@ -11,7 +11,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import catalog, troubleshoot
+from app.routes import catalog, troubleshoot, vision
 from app.schemas import HealthResponse
 from config.settings import get_settings
 from engine.kb_loader import get_knowledge_base
@@ -53,6 +53,7 @@ app.add_middleware(
 
 app.include_router(catalog.router)
 app.include_router(troubleshoot.router)
+app.include_router(vision.router)
 
 
 @app.get("/health", response_model=HealthResponse, tags=["system"])
