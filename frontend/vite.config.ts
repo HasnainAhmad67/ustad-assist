@@ -1,21 +1,31 @@
-import { defineConfig } from 'vite';
-import { loadEnv } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
-  const backendUrl = env.VITE_BACKEND_URL || 'https://ustad-assist-lbxl.vercel.app
-';
-  const proxy = {
-    '/api': {
-      target: backendUrl,
-      changeOrigin: true,
-    },
-  };
+  const backendUrl = env.VITE_API_BASE_URL || 'http://127.0.0.1:8001';
 
   return {
     plugins: [react()],
-    server: { host: '127.0.0.1', port: 5173, proxy },
-    preview: { host: '127.0.0.1', port: 5173, proxy },
+    server: {
+      host: '0.0.0.0',
+      port: 5173,
+      proxy: {
+        '/api': {
+          target: backendUrl,
+          changeOrigin: true,
+        },
+      },
+    },
+    preview: {
+      host: '0.0.0.0',
+      port: 4173,
+      proxy: {
+        '/api': {
+          target: backendUrl,
+          changeOrigin: true,
+        },
+      },
+    },
   };
 });
