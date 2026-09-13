@@ -101,6 +101,15 @@ class NormalizedRecord:
 
 
 @dataclass(frozen=True)
+class CatalogError:
+    """One verified error or condition selectable for a catalog model."""
+
+    code: str
+    label: str
+    error_type: Optional[str] = None
+
+
+@dataclass(frozen=True)
 class CatalogModel:
     """One supported (equipment_category, manufacturer, model) combination,
     derived from verified records — never hand-maintained."""
@@ -109,6 +118,7 @@ class CatalogModel:
     manufacturer: str
     model: str
     model_aliases: List[str]
+    error_options: List[CatalogError] = field(default_factory=list)
 
 
 @dataclass(frozen=True)

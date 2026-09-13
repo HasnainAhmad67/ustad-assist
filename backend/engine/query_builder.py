@@ -127,6 +127,23 @@ def run_troubleshoot_query(
     )
 
 
+def _build_evidence_only_answer(evidence: EvidenceBundle) -> GroundedAnswer:
+    """Build a strictly evidence-derived answer when Gemini is unavailable."""
+    record = evidence.matched_records[0]
+    return GroundedAnswer(
+        issue_summary=record.issue_title or record.code,
+        meaning_explanation=record.meaning or "Not stated in manual",
+        cause_explanations=list(record.possible_causes),
+        safe_check_guidance=list(record.safe_user_checks),
+        technician_only_guidance=list(record.technician_only_checks),
+        next_action=(
+            " ".join(record.troubleshooting_steps)
+            if record.troubleshooting_steps
+            else "Not stated in manual. Contact a qualified technician."
+        ),
+    )
+
+
 def run_troubleshoot(
     kb: KnowledgeBase,
     query: Query,
@@ -166,20 +183,24 @@ def run_troubleshoot(
     client = gemini_client or GeminiClient()
 
     grounded_answer: Optional[GroundedAnswer] = None
+    used_evidence_fallback = False
     try:
         grounded_answer = client.generate(prompt)
     except GeminiGenerationError:
-        # validate_output() turns a None grounded_answer into
-        # TroubleshootStatus.ERROR while still carrying evidence-level
-        # safety info forward — a Gemini failure never becomes a silent
-        # fabricated success.
-        grounded_answer = None
+        # The manual evidence is already verified and contains all fields
+        # needed for a safe structured response. Use it directly rather than
+        # turning a missing optional Gemini service into a blank error screen.
+        grounded_answer = _build_evidence_only_answer(evidence)
+        used_evidence_fallback = True
 
     validated = validate_output(evidence, grounded_answer)
+    message = validated.message
+    if used_evidence_fallback and validated.status == TroubleshootStatus.VERIFIED_RESULT:
+        message = "Response prepared directly from verified manual evidence; grounded generation was unavailable."
 
     return TroubleshootResult(
         status=validated.status,
-        message=validated.message,
+        message=message,
         evidence=evidence,
         grounded_answer=grounded_answer,
         safety=validated.safety,

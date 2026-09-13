@@ -41,7 +41,18 @@ def get_catalog(kb: KnowledgeBase = Depends(get_kb_dep)) -> CatalogResponse:
         manufacturers = grouped[equipment_category]
         for manufacturer in sorted(manufacturers.keys()):
             models_out = [
-                CatalogModelOut(model=m.model, model_aliases=m.model_aliases)
+                CatalogModelOut(
+                    model=m.model,
+                    model_aliases=m.model_aliases,
+                    error_options=[
+                        {
+                            "code": option.code,
+                            "label": option.label,
+                            "error_type": option.error_type,
+                        }
+                        for option in m.error_options
+                    ],
+                )
                 for m in sorted(manufacturers[manufacturer], key=lambda m: m.model)
             ]
             manufacturers_out.append(

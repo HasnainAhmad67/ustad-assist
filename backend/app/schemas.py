@@ -26,6 +26,7 @@ class CatalogModelOut(BaseModel):
 
     model: str
     model_aliases: List[str] = Field(default_factory=list)
+    error_options: List[dict] = Field(default_factory=list)
 
 
 class CatalogManufacturerOut(BaseModel):
@@ -107,6 +108,7 @@ class EvidenceOut(BaseModel):
     technician_only_checks: List[str] = Field(default_factory=list)
     source: SourceCitationOut
     retrieval_method: Optional[str] = None  # "exact" | "semantic"
+    detailed_note: Optional[str] = None
 
 
 class GroundedAnswerOut(BaseModel):

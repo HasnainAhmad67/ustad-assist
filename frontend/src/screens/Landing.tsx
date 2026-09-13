@@ -17,7 +17,7 @@ function EquipmentIcon({ category }: { category: string }) {
 export function Landing({ catalog, onManual, onImage }: Props) {
   return (
     <>
-      <section className="landing-hero">
+      <section className="landing-hero landing-3d-hero">
         <div className="hero-copy">
           <p className="eyebrow">Technical troubleshooting / evidence first</p>
           <h1>Technical troubleshooting,<br /><span>grounded in verified manuals.</span></h1>
@@ -27,14 +27,14 @@ export function Landing({ catalog, onManual, onImage }: Props) {
             <button className="button button-secondary" onClick={onImage}><Camera size={16} /> Use an image</button>
           </div>
         </div>
-        <div className="hero-proof">
-          <div className="proof-icon"><ShieldCheck size={22} /></div>
-          <p className="eyebrow">Trust model</p>
-          <strong>Assist, don’t guess.</strong>
-          <p>Guidance is shown only when the backend returns verified evidence and a structured safety decision.</p>
-          <div className="proof-rule" />
-          <span><FileCheck2 size={14} /> Manufacturer manuals</span>
-          <span><ShieldCheck size={14} /> Safety checked</span>
+        <div className="landing-3d-visual" aria-label="Evidence-led troubleshooting visualization">
+          <div className="diagnostic-grid" />
+          <div className="diagnostic-orbit orbit-a" /><div className="diagnostic-orbit orbit-b" />
+          <div className="diagnostic-core"><ShieldCheck size={34}/><strong>VERIFIED</strong><span>evidence layer</span></div>
+          <div className="diagnostic-chip chip-source"><FileCheck2 size={14}/><span>Official manual</span><b>✓</b></div>
+          <div className="diagnostic-chip chip-safe"><ShieldCheck size={14}/><span>Safety checked</span><b>✓</b></div>
+          <div className="diagnostic-chip chip-signal"><Zap size={14}/><span>Signal matched</span><b>98%</b></div>
+          <div className="diagnostic-label">USTAD / CORE 01</div>
         </div>
       </section>
 

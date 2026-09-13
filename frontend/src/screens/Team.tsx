@@ -1,22 +1,25 @@
-import { ArrowRight, Linkedin, UsersRound } from 'lucide-react';
+import { ArrowRight, Linkedin, UserRound, UsersRound } from 'lucide-react';
 
 type Props = { onHome: () => void };
-type Profile = { initials: string; name: string; role: string; contribution: string; featured?: boolean; linkedin?: string };
+type Profile = { name: string; role: string; contribution: string; image?: string; linkedin?: string; featured?: boolean; gender: 'male' | 'female' };
 
 const profiles: Profile[] = [
-  { initials: 'TL', name: 'Team leader profile', role: 'Team leader', contribution: 'Product direction, technical vision, and project coordination.', featured: true },
-  { initials: '01', name: 'Team member 01', role: 'Engineering contribution', contribution: 'Project contribution and role details can be added here.' },
-  { initials: '02', name: 'Team member 02', role: 'Engineering contribution', contribution: 'Project contribution and role details can be added here.' },
-  { initials: '03', name: 'Team member 03', role: 'Engineering contribution', contribution: 'Project contribution and role details can be added here.' },
-  { initials: '04', name: 'Team member 04', role: 'Engineering contribution', contribution: 'Project contribution and role details can be added here.' },
-  { initials: '05', name: 'Team member 05', role: 'Engineering contribution', contribution: 'Project contribution and role details can be added here.' },
+  { name: 'Hasnain Ahmad', role: 'Team Leader & AI Engineer', contribution: 'Designed and built the complete Ustad Assist project, including its safety-first retrieval and grounding workflow.', image: '/team/hasnain-ahmad.jpg', linkedin: 'https://www.linkedin.com/in/hasnain-ahmad-047210349/', featured: true, gender: 'male' },
+  { name: 'Sharjeel Sarwar', role: '', contribution: '', image: '/team/sharjeel-sarwar.png', gender: 'male' },
+  { name: 'Team Member 01', role: '', contribution: '', gender: 'male' },
+  { name: 'Team Member 02', role: '', contribution: '', gender: 'female' },
+  { name: 'Team Member 03', role: '', contribution: '', gender: 'female' },
 ];
 
+function ProfileVisual({ profile }: { profile: Profile }) {
+  return profile.image ? <img className="team-avatar-image" src={profile.image} alt={`${profile.name} profile`} /> : <span className={`team-avatar-icon ${profile.gender}`}><UserRound size={42} strokeWidth={1.35} /></span>;
+}
+
 export function Team({ onHome }: Props) {
-  return <div className="info-page team-page">
-    <section className="info-hero"><div><p className="eyebrow">Project team</p><h1>The people building a more dependable troubleshooting workflow.</h1><p className="lede">Ustad Assist brings together product thinking, engineering discipline, and a strong respect for safety-critical technical information.</p></div><div className="info-hero-mark"><UsersRound size={32}/><span>Six-person project team</span></div></section>
-    <section className="team-grid">{profiles.map((profile) => <article className={profile.featured ? 'team-card featured' : 'team-card'} key={profile.initials}><div className="avatar">{profile.initials}</div><div className="team-copy"><span className="team-role">{profile.role}</span><h2>{profile.name}</h2><p>{profile.contribution}</p>{profile.linkedin && <a className="linkedin-link" href={profile.linkedin} target="_blank" rel="noreferrer"><Linkedin size={14}/> LinkedIn</a>}</div>{profile.featured && <span className="featured-label">Featured profile</span>}</article>)}</section>
-    <section className="team-note"><p className="eyebrow">Profile data</p><p>These profile slots intentionally avoid invented personal information. Replace the placeholder names, roles, photos, and LinkedIn links with the project team’s approved details when available.</p></section>
-    <section className="closing-cta"><div><p className="eyebrow">Build with clarity</p><h2>Meet the workflow behind the product.</h2><p>Return to the supported equipment catalog to explore Ustad Assist.</p></div><button className="button button-primary" onClick={onHome}>Go to home <ArrowRight size={16}/></button></section>
+  return <div className="team-3d-page">
+    <section className="team-3d-hero"><div className="team-hero-copy"><div className="team-orbit-label"><span className="orbit-dot" /> USTAD ASSIST / TEAM</div><h1>Built by people who care about <span>clarity.</span></h1><p>Meet the team behind an evidence-led troubleshooting experience for critical electrical equipment.</p><div className="team-hero-stats"><div><strong>05</strong><span>Project profiles</span></div><div><strong>01</strong><span>AI-led system</span></div><div><strong>100%</strong><span>Built with purpose</span></div></div></div><div className="team-hero-orbit"><div className="orbit-ring ring-one" /><div className="orbit-ring ring-two" /><div className="orbit-core"><UsersRound size={36}/><span>Human<br/>intelligence</span></div><span className="orbit-tag tag-one">SAFETY</span><span className="orbit-tag tag-two">AI</span><span className="orbit-tag tag-three">TRUST</span></div></section>
+    <section className="team-section-heading"><div><p className="eyebrow">The people behind the product</p><h2>A small team with a serious mission.</h2></div><span className="team-index">01 / 02</span></section>
+    <section className="team-3d-grid">{profiles.map((profile, index) => <article className={`team-3d-card ${profile.featured ? 'leader-card' : ''}`} key={profile.name}><div className="team-card-number">{String(index + 1).padStart(2, '0')}</div><div className="team-avatar-wrap"><ProfileVisual profile={profile} /></div><div className="team-card-body"><span className="team-role">{profile.role || 'Role to be added'}</span><h3>{profile.name}</h3><p>{profile.contribution || 'Profile details will be added by the project team.'}</p>{profile.linkedin && <a className="team-linkedin" href={profile.linkedin} target="_blank" rel="noreferrer"><Linkedin size={15}/> View LinkedIn <ArrowRight size={14}/></a>}</div>{profile.featured && <span className="team-featured-badge">LEAD PROFILE</span>}</article>)}</section>
+    <section className="team-3d-note"><div className="note-mark">UA</div><div><p className="eyebrow">A shared standard</p><h2>Assist, don’t guess.</h2><p>Every role on this page supports the same principle: make technical information clearer, safer, and easier to act on.</p></div><button className="button button-primary" onClick={onHome}>Explore the product <ArrowRight size={16}/></button></section>
   </div>;
 }

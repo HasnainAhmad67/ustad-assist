@@ -58,6 +58,7 @@ def retrieve_evidence(
             query.manufacturer,
             query.model,
             query.code,
+            query.symptom,
         )
         if exact_hit is not None:
             bundle = EvidenceBundle(
@@ -70,6 +71,30 @@ def retrieve_evidence(
                 evidence_bundle=bundle,
                 reason="Exact code match found within the confirmed manufacturer/model.",
             )
+
+        # The expanded dataset contains legitimate repeated codes with
+        # different manual meanings. Without symptom context, semantic search
+        # over a bare numeric/text code could select an arbitrary row.
+        if not query.symptom:
+            code_candidates = [
+                record
+                for record in filter_by_equipment_identity(
+                    verified_records,
+                    query.equipment_category,
+                    query.manufacturer,
+                    query.model,
+                )
+                if record.code.strip().lower() == query.code.strip().lower()
+            ]
+            if len(code_candidates) > 1:
+                return RetrievalResult(
+                    status=TroubleshootStatus.ISSUE_NOT_VERIFIED,
+                    evidence_bundle=None,
+                    reason=(
+                        "This code maps to multiple verified manual entries. "
+                        "Provide the displayed symptom or issue text to disambiguate it."
+                    ),
+                )
 
     # Stage (2): narrow to the confirmed manufacturer+model BEFORE any
     # semantic search — the FAISS index is only ever built over this

@@ -23,8 +23,9 @@ reasoning behind each one — nothing here is arbitrary):
 4. `page`: an int for some Growatt records, a string for Eaton records.
    Always normalized to `Optional[str]`.
 5. `record_id`: does not exist in the raw dataset. A stable synthetic ID is
-   derived (never random) from
-   (equipment_category, manufacturer, model, code).
+   derived (never random) from equipment identity, code, issue title, and
+   source page because the expanded dataset can contain multiple manual rows
+   with the same displayed code.
 6. `model_aliases` / `model_family`: only present at the `manual_metadata`
    level in the raw dataset, not per record. Resolved here via a join on
    (equipment_category, model).
@@ -48,7 +49,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 from config.settings import get_settings
-from engine.contracts import CatalogModel, NormalizedRecord, SourceCitation, VerificationStatus
+from engine.contracts import CatalogError, CatalogModel, NormalizedRecord, SourceCitation, VerificationStatus
 
 # Substrings (checked case-insensitively) that mark a raw string value as a
 # placeholder meaning "the manual does not state this" rather than actual
@@ -98,13 +99,23 @@ def _normalize_steps(value) -> List[str]:
     return [str(item).strip() for item in value if str(item).strip()]
 
 
-def _make_record_id(equipment_category: str, manufacturer: str, model: str, code: str) -> str:
+def _make_record_id(
+    equipment_category: str,
+    manufacturer: str,
+    model: str,
+    code: str,
+    issue_title: str,
+    page: Optional[str],
+) -> str:
     """
     Deterministic, stable synthetic ID. Same inputs always produce the same
     ID, so it stays stable across reloads without needing to persist it
     anywhere.
     """
-    raw = f"{equipment_category}|{manufacturer}|{model}|{code}".strip().lower()
+    raw = (
+        f"{equipment_category}|{manufacturer}|{model}|{code}|"
+        f"{issue_title}|{page or ''}"
+    ).strip().lower()
     return hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16]
 
 
@@ -217,7 +228,10 @@ class KnowledgeBase:
         verification_status = raw.get("verification_status") or VerificationStatus.NOT_VERIFIED.value
         verification_notes = raw.get("verification_notes")
 
-        record_id = _make_record_id(equipment_category, manufacturer, model, code)
+        issue_title = str(raw.get("issue_title") or "").strip()
+        record_id = _make_record_id(
+            equipment_category, manufacturer, model, code, issue_title, page
+        )
 
         return NormalizedRecord(
             record_id=record_id,
@@ -231,7 +245,7 @@ class KnowledgeBase:
             manual_language="English",
             code=code,
             issue_type=issue_type,
-            issue_title=str(raw.get("issue_title") or "").strip(),
+            issue_title=issue_title,
             meaning=str(raw.get("meaning") or "").strip(),
             possible_causes=possible_causes,
             troubleshooting_steps=troubleshooting_steps,
@@ -268,6 +282,51 @@ class KnowledgeBase:
         source of truth for what is "supported."
         """
         seen: Dict[Tuple[str, str, str], CatalogModel] = {}
+        errors_by_model: Dict[Tuple[str, str, str], List[CatalogError]] = {}
+        for record in self.verified_records():
+            key = (record.equipment_category, record.manufacturer, record.model)
+            option = CatalogError(
+                code=record.code,
+                label=record.issue_title or record.meaning or record.code,
+                error_type=record.issue_type,
+            )
+            current = errors_by_model.setdefault(key, [])
+            if not any(
+                item.code == option.code
+                and item.label == option.label
+                and item.error_type == option.error_type
+                for item in current
+            ):
+                current.append(option)
+
+        # The expanded dataset contains officially documented catalog models
+        # for which no page-verified troubleshooting row was available. They
+        # are supported identities, but not evidence-bearing fault records.
+        # Include them in the catalog without inventing a troubleshooting
+        # record; retrieval will correctly return issue_not_verified when no
+        # verified issue matches.
+        for model_meta in self._raw.get("models", []) or []:
+            equipment_category = str(model_meta.get("equipment_category") or "").strip()
+            manufacturer = str(model_meta.get("manufacturer") or "").strip()
+            model = str(model_meta.get("model") or "").strip()
+            if not equipment_category or not manufacturer or not model:
+                continue
+            key = (equipment_category, manufacturer, model)
+            seen[key] = CatalogModel(
+                equipment_category=equipment_category,
+                manufacturer=manufacturer,
+                model=model,
+                model_aliases=[
+                    str(alias).strip()
+                    for alias in (model_meta.get("model_aliases") or [])
+                    if str(alias).strip()
+                ],
+                error_options=sorted(
+                    errors_by_model.get(key, []),
+                    key=lambda option: (option.code, option.label),
+                ),
+            )
+
         for record in self.verified_records():
             key = (record.equipment_category, record.manufacturer, record.model)
             if key not in seen:
@@ -276,6 +335,10 @@ class KnowledgeBase:
                     manufacturer=record.manufacturer,
                     model=record.model,
                     model_aliases=record.model_aliases,
+                    error_options=sorted(
+                        errors_by_model.get(key, []),
+                        key=lambda option: (option.code, option.label),
+                    ),
                 )
         return sorted(
             seen.values(),

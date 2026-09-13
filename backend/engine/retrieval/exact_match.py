@@ -13,6 +13,7 @@ module. Everything here is a plain, deterministic comparison — which is
 what makes it unit-testable without any ML dependency.
 """
 
+import re
 from typing import List, Optional
 
 from engine.contracts import NormalizedRecord
@@ -63,12 +64,14 @@ def find_exact_match(
     manufacturer: str,
     model: str,
     code: str,
+    symptom: Optional[str] = None,
 ) -> Optional[NormalizedRecord]:
     """
     Stage (1): category -> manufacturer -> exact model -> exact code.
-    Deterministic. Returns the first exact hit, or None if there isn't
-    one. Never falls back to fuzzy/semantic matching itself — that is a
-    separate, later stage, orchestrated by evidence_assembler.py.
+    Deterministic. If a code is used by multiple manual rows, a symptom is
+    required to disambiguate them; this prevents returning the first row and
+    silently showing the wrong diagnosis. Never falls back to semantic
+    matching itself — that is a separate later stage.
     """
     if not code or not code.strip():
         return None
@@ -76,8 +79,44 @@ def find_exact_match(
     code_key = code.strip().lower()
     candidates = filter_by_equipment_identity(records, equipment_category, manufacturer, model)
 
-    for record in candidates:
-        if record.code.strip().lower() == code_key:
-            return record
+    exact_code_candidates = [
+        record for record in candidates if record.code.strip().lower() == code_key
+    ]
+    if not exact_code_candidates:
+        return None
+    if len(exact_code_candidates) == 1:
+        return exact_code_candidates[0]
 
-    return None
+    query_tokens = _tokens(symptom or "")
+    if not query_tokens:
+        return None
+    ranked = sorted(
+        (
+            (_symptom_score(record, query_tokens), index, record)
+            for index, record in enumerate(exact_code_candidates)
+        ),
+        key=lambda item: (item[0], -item[1]),
+        reverse=True,
+    )
+    best_score, _, best_record = ranked[0]
+    if best_score <= 0:
+        return None
+    if len(ranked) > 1 and best_score == ranked[1][0]:
+        return None
+    return best_record
+
+
+def _tokens(value: str) -> set[str]:
+    """Return simple alphanumeric tokens for deterministic symptom matching."""
+    return {
+        token
+        for token in re.findall(r"[a-z0-9]+", value.lower())
+        if len(token) > 1
+    }
+
+
+def _symptom_score(record: NormalizedRecord, query_tokens: set[str]) -> int:
+    searchable = " ".join(
+        [record.issue_title, record.meaning, " ".join(record.possible_causes)]
+    )
+    return len(query_tokens & _tokens(searchable))

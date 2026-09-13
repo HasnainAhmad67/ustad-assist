@@ -44,6 +44,7 @@ def to_troubleshoot_response(result: TroubleshootResult) -> TroubleshootResponse
                 official_url=record.source.official_url,
             ),
             retrieval_method=result.evidence.retrieval_method,
+            detailed_note=record.verification_notes,
         )
 
     grounded_answer_out: Optional[GroundedAnswerOut] = None
